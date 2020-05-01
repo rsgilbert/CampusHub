@@ -2,7 +2,7 @@ package com.monstercode.campushub.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.monstercode.bigmotherhen.network.getNetworkService
+import com.monstercode.campushub.network.getNetworkService
 import com.monstercode.campushub.database.ItemDao
 import com.monstercode.campushub.database.asDomainModel
 import com.monstercode.campushub.domain.Item

@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</LinearLayout>
+    <data>
+        <variable
+            name="item"
+            type="com.monstercode.campushub.domain.Item" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/spacing_normal"
+        app:addClickAnimation="@{true}"
+        >
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="@dimen/circle_height"
+            android:layout_height="@dimen/circle_height"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:background="@drawable/bg_circle"
+            android:text="@{String.valueOf(item.name)}"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:textSize="32sp"
+            android:gravity="center"
+            tools:text="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item._id}"
+            android:textColor="@android:color/primary_text_light"
+            android:layout_toEndOf="@+id/item_name"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            tools:text="Dark Stranger"/>
+    </RelativeLayout>
+</layout>

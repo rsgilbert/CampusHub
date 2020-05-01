@@ -5,41 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
-
-
+    app:startDestination="@id/orderListFragment">
     <fragment
-        android:id="@+id/listFragment"
-        android:name="com.monstercode.bigmotherhen.list.ListFragment"
-        android:label="@string/list_title"
-        tools:layout="@layout/fragment_order_list">
-        <action
-            android:id="@+id/action_listFragment_to_chapterFragment"
-            app:destination="@id/chapterFragment" />
-    </fragment>
+        android:id="@+id/itemListFragment"
+        android:name="com.monstercode.campushub.itemlist.ItemListFragment"
+        android:label="ItemListFragment"
+        tools:layout="@layout/item_list"/>
     <fragment
-        android:id="@+id/chapterFragment"
-        android:name="com.monstercode.bigmotherhen.chapter.ChapterFragment"
-        tools:layout="@layout/fragment_chapter">
-        <argument
-            android:name="chapterNumber"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_chapterFragment_self"
-            app:destination="@id/chapterFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_left"
-            app:popUpTo="@+id/listFragment" />
-        <action
-            android:id="@+id/action_chapterFragment_to_creditsFragment"
-            app:destination="@id/creditsFragment"
-            app:popUpTo="@+id/listFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/creditsFragment"
-        android:name="com.monstercode.bigmotherhen.credits.CreditsFragment"
-        android:label="@string/credits_title"
-        tools:layout="@layout/fragment_credits"/>
+        android:id="@+id/orderListFragment"
+        android:name="com.monstercode.campushub.orderlist.OrderListFragment"
+        android:label="OrderListFragment"
+        tools:layout="@layout/order_list"/>
 </navigation>

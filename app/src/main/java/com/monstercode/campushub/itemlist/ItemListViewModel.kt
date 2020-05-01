@@ -1,24 +1,24 @@
-package com.monstercode.campushub.orderlist
+package com.monstercode.campushub.itemlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.monstercode.bigmotherhen.util.singleArgViewModelFactory
-import com.monstercode.campushub.repository.OrderRepository
+import com.monstercode.campushub.repository.ItemRepository
 import com.monstercode.campushub.util.RefreshError
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class OrderListViewModel(private val repository: OrderRepository) : ViewModel() {
+class ItemListViewModel(private val repository: ItemRepository) : ViewModel() {
     init {
-        refreshOrders()
+        refreshItems()
     }
 
-    val orders = repository.orderList
+    val items = repository.itemList
 
-    private fun refreshOrders() {
+    private fun refreshItems() {
         viewModelScope.launch {
             try {
-                repository.refreshOrders()
+                repository.refreshItems()
             } catch(e: RefreshError) {
                 Timber.e("Error refreshing: ${e.message}")
             }
@@ -28,9 +28,9 @@ class OrderListViewModel(private val repository: OrderRepository) : ViewModel() 
 
     companion object {
         /**
-         * Factory for creating [ListViewModel]
-         * @param arg the repository to pass to [ListViewModel]
+         * Factory for creating ViewModel
+         * @param arg the repository to pass to ViewModel
          */
-        val FACTORY = singleArgViewModelFactory(::OrderListViewModel)
+        val FACTORY = singleArgViewModelFactory(::ItemListViewModel)
     }
 }

@@ -1,6 +1,5 @@
 package com.monstercode.campushub
 
-
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -10,10 +9,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.domain.Order
+import com.monstercode.campushub.itemlist.ItemListAdapter
+import com.monstercode.campushub.orderlist.OrderListAdapter
 import com.monstercode.campushub.util.setClickableAnimation
 import de.hdodenhof.circleimageview.CircleImageView
-import timber.log.Timber
+
 
 @BindingAdapter("imageUrl")
 fun ImageView.bindImage(imgUrl: String?) {
@@ -51,7 +53,7 @@ fun RecyclerView.bindOrderList(orderList: List<Order>?) {
 }
 
 @BindingAdapter("itemList")
-fun RecyclerView.bindItemList(itemList: List<Order>?) {
+fun RecyclerView.bindItemList(itemList: List<Item>?) {
     (adapter as ItemListAdapter).submitList(itemList)
 }
 

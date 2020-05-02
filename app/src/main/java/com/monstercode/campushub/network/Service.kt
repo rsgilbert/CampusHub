@@ -18,6 +18,9 @@ interface Service {
     @GET("orders")
     suspend fun fetchOrders(): List<NetworkOrder>
 
+    @GET("pictures")
+    suspend fun fetchPictures(): List<NetworkPicture>
+
 }
 
 /**

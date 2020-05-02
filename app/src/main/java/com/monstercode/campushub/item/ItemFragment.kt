@@ -14,6 +14,7 @@ import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentItemBinding
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.repository.ItemRepository
+import org.jetbrains.anko.support.v4.toast
 
 class ItemFragment : Fragment() {
 
@@ -33,7 +34,15 @@ class ItemFragment : Fragment() {
             setAppBarTitle(it)
         }
 
+        binding.pictureList.adapter = PictureListAdapter(pictureClickListener)
+
+
+
         return binding.root
+    }
+
+    private val pictureClickListener = PictureListAdapter.OnClickListener {
+        toast(it.pictureUrl)
     }
 
     /**

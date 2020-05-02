@@ -5,8 +5,7 @@ import com.monstercode.campushub.database.DatabaseItem
 data class NetworkItem(
     val _id: String,
     val name: String,
-    val price: Int,
-    val pictures: List<String>
+    val price: Int
 ) {
     fun asDatabaseModel() = DatabaseItem(
         _id = _id,
@@ -16,3 +15,5 @@ data class NetworkItem(
 }
 
 fun List<NetworkItem>.asDatabaseModel() = map { it.asDatabaseModel() }
+
+

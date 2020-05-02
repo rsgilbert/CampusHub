@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.monstercode.bigmotherhen.list.ListFragment">
+        tools:context="com.monstercode.campushub.itemlist.ItemListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/item_list"

@@ -4,5 +4,5 @@ data class Item(
     val _id: String,
     val name: String,
     val price: Int,
-    val pictures: List<String>
+    val pictures: List<Picture>
 )

@@ -15,3 +15,7 @@ data class NetworkPicture(
         isProfile = isProfile
     )
 }
+
+fun List<NetworkPicture>.asDatabaseModel() = map { it.asDatabaseModel() }
+
+

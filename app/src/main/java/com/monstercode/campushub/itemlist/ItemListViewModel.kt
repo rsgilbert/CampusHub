@@ -27,10 +27,6 @@ class ItemListViewModel(private val repository: ItemRepository) : ViewModel() {
 
 
     companion object {
-        /**
-         * Factory for creating ViewModel
-         * @param arg the repository to pass to ViewModel
-         */
         val FACTORY = singleArgViewModelFactory(::ItemListViewModel)
     }
 }

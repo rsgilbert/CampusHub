@@ -1,19 +1,18 @@
 package com.monstercode.campushub.item
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.monstercode.campushub.databinding.ItemListItemBinding
-import com.monstercode.campushub.domain.Item
+import com.monstercode.campushub.databinding.PictureListItemBinding
+import com.monstercode.campushub.domain.Picture
 
-class ItemListAdapter(private val onClickListener: OnClickListener) :
-    ListAdapter<Item, ItemListAdapter.ViewHolder>(ItemDiffCallback()) {
+class PictureListAdapter(private val onClickListener: OnClickListener) :
+    ListAdapter<Picture, PictureListAdapter.ViewHolder>(PictureDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Item = getItem(position)
+        val item: Picture = getItem(position)
         holder.itemView.setOnClickListener {
             onClickListener.onClick(item)
         }
@@ -22,30 +21,32 @@ class ItemListAdapter(private val onClickListener: OnClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
 
-    class ViewHolder private constructor(private val binding: ItemListItemBinding) :
+    class ViewHolder private constructor(private val binding: PictureListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Item) {
-            binding.item = item
+        fun bind(item: Picture) {
+            binding.picture = item
             binding.executePendingBindings()
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemListItemBinding.inflate(layoutInflater, parent, false)
+                val binding = PictureListItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 
-    class OnClickListener(val clickListener: (item: Item) -> Unit) {
-        fun onClick(item: Item) = clickListener(item)
+    class OnClickListener(val clickListener: (item: Picture) -> Unit) {
+        fun onClick(item: Picture) = clickListener(item)
     }
 }
 
-class ItemDiffCallback : DiffUtil.ItemCallback<Item>() {
-    override fun areItemsTheSame(oldItem: Item, newItem: Item) = oldItem._id == newItem._id
+class PictureDiffCallback : DiffUtil.ItemCallback<Picture>() {
+    override fun areItemsTheSame(oldPicture: Picture, newPicture: Picture) =
+        oldPicture._id == newPicture._id
 
-    override fun areContentsTheSame(oldItem: Item, newItem: Item) = oldItem == newItem
+    override fun areContentsTheSame(oldPicture: Picture, newPicture: Picture) =
+        oldPicture == newPicture
 }

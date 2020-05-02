@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.monstercode.campushub.repository.ItemRepository
 import com.monstercode.campushub.util.singleArgViewModelFactory
 
-class ItemViewModel(repository: ItemRepository) : ViewModel() {
+class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 
     private val itemIdLiveData = MutableLiveData<String>()
 
-    val itemLiveData = Transformations.switchMap(itemIdLiveData) {
+    var itemLiveData = Transformations.switchMap(itemIdLiveData) {
         repository.getItem(it)
     }
-
 
     fun setItemIdLiveData(itemId : String) {
         itemIdLiveData.value = itemId

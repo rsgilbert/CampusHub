@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.domain.Order
+import com.monstercode.campushub.domain.Picture
+import com.monstercode.campushub.item.PictureListAdapter
 import com.monstercode.campushub.itemlist.ItemListAdapter
 import com.monstercode.campushub.orderlist.OrderListAdapter
 import com.monstercode.campushub.util.setClickableAnimation
@@ -57,6 +59,10 @@ fun RecyclerView.bindItemList(itemList: List<Item>?) {
     (adapter as ItemListAdapter).submitList(itemList)
 }
 
+@BindingAdapter("pictureList")
+fun RecyclerView.bindPictureList(pictureList: List<Picture>?) {
+    (adapter as PictureListAdapter).submitList(pictureList)
+}
 
 @BindingAdapter("addClickAnimation")
 fun RelativeLayout.addClickAnimation(shouldAdd: Boolean?) {

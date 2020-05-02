@@ -1,21 +1,23 @@
 package com.monstercode.campushub.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ItemDao {
-    @get:Query("SELECT * FROM DatabaseItem")
-    val itemListLiveData : LiveData<List<DatabaseItem>>
+    @Transaction
+    @Query("SELECT * FROM DatabaseItem")
+    fun getItems(): LiveData<List<DatabaseCompleteItem>>
 
-    @Query("SELECT * FROM DatabaseITEM WHERE _id = :itemId")
-    fun getItem(itemId: String) : LiveData<DatabaseItem>
+    @Transaction
+    @Query("SELECT * FROM DatabaseItem WHERE _id = :itemId LIMIT 1")
+    fun getItem(itemId: String): LiveData<DatabaseCompleteItem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<DatabaseItem>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPictures(pictures: List<DatabasePicture>)
 
 
 }

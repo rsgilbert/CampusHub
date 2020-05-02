@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.monstercode.campushub.R
 import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.ItemListBinding
@@ -44,7 +45,8 @@ class ItemListFragment : Fragment() {
 
     private val itemListClickListener =
         ItemListAdapter.OnClickListener {
-            Toast.makeText(context, "Item clicked: ${it.name}", Toast.LENGTH_LONG).show()
+            val action = ItemListFragmentDirections.actionItemListFragmentToItemFragment(it._id)
+            findNavController().navigate(action)
         }
 }
 

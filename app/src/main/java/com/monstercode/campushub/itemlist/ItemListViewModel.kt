@@ -2,9 +2,9 @@ package com.monstercode.campushub.itemlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.monstercode.bigmotherhen.util.singleArgViewModelFactory
 import com.monstercode.campushub.repository.ItemRepository
 import com.monstercode.campushub.util.RefreshError
+import com.monstercode.campushub.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

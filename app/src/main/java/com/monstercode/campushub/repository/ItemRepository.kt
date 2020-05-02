@@ -19,6 +19,10 @@ class ItemRepository(private val itemDao: ItemDao) {
         it.asDomainModel()
     }
 
+    fun getItem(itemId: String) = Transformations.map(itemDao.getItem(itemId)) {
+        it.asDomainModel()
+    }
+
     suspend fun refreshItems() {
         try {
             val items: List<NetworkItem> = getNetworkService().fetchItems()
@@ -29,4 +33,5 @@ class ItemRepository(private val itemDao: ItemDao) {
         }
     }
 }
+
 

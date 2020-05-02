@@ -5,15 +5,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/orderListFragment">
+    app:startDestination="@id/itemListFragment">
     <fragment
         android:id="@+id/itemListFragment"
         android:name="com.monstercode.campushub.itemlist.ItemListFragment"
-        android:label="ItemListFragment"
-        tools:layout="@layout/item_list"/>
+        android:label="@string/item_list_title"
+        tools:layout="@layout/item_list">
+        <action
+            android:id="@+id/action_itemListFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/orderListFragment"
         android:name="com.monstercode.campushub.orderlist.OrderListFragment"
-        android:label="OrderListFragment"
+        android:label="@string/order_list_title"
         tools:layout="@layout/order_list"/>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.monstercode.campushub.item.ItemFragment"
+        android:label="ItemFragment" >
+        <argument
+            android:name="itemId"
+            app:argType="string" />
+    </fragment>
 </navigation>

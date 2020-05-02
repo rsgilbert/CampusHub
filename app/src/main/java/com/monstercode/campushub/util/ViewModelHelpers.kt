@@ -1,4 +1,4 @@
-package com.monstercode.bigmotherhen.util
+package com.monstercode.campushub.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

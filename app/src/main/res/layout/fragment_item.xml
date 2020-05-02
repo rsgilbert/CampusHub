@@ -17,13 +17,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/picture_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
             android:clipToPadding="false"
             android:padding="6dp"
             app:addDivider="@{ true }"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:pictureList="@{itemViewModel.itemLiveData.pictures }"
+            app:horizontalLayout="@{ true }"
             tools:listitem="@layout/picture_list_item" />
 
         <TextView

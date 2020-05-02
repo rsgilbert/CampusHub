@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -72,6 +73,14 @@ fun RelativeLayout.addClickAnimation(shouldAdd: Boolean?) {
         }
     }
 }
+
+@BindingAdapter("horizontalLayout")
+fun RecyclerView.horizontalLayout(asHorizontal: Boolean?) {
+    asHorizontal?.let {
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+}
+
 
 @BindingAdapter("addDivider")
 fun RecyclerView.addDivider(shouldAdd: Boolean?) {

@@ -36,8 +36,6 @@ class ItemFragment : Fragment() {
 
         binding.pictureList.adapter = PictureListAdapter(pictureClickListener)
 
-
-
         return binding.root
     }
 

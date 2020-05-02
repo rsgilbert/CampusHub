@@ -27,12 +27,13 @@
             tools:listitem="@layout/picture_list_item" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{itemViewModel.itemLiveData.name}"
+            android:text="@{String.valueOf(itemViewModel.itemLiveData.price)}"
             android:textSize="32dp"
-            tools:text="GOOD"
+            android:textColor="@android:color/primary_text_light"
+            tools:text="2000"
             />
 
 

@@ -12,6 +12,9 @@ data class NetworkItem(
         name = name,
         price = price
     )
+
+    // may be confusing and lead to autocomplete mistakes so I have commented it out
+//    fun asDomainModel() = asDatabaseModel().asDomainModel()
 }
 
 fun List<NetworkItem>.asDatabaseModel() = map { it.asDatabaseModel() }

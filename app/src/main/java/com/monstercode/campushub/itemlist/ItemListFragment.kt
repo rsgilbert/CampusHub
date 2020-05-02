@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.monstercode.campushub.R
 import com.monstercode.campushub.database.getDatabase
@@ -28,6 +28,14 @@ class ItemListFragment : Fragment() {
         binding.itemListViewModel = itemListViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.itemList.adapter = ItemListAdapter(itemListClickListener)
+
+        itemListViewModel.navigateToNewItemLiveData.observe(this) {
+            if (it == true) {
+                val action = ItemListFragmentDirections.actionItemListFragmentToNewItemFragment()
+                findNavController().navigate(action)
+                itemListViewModel.navigateToNewItemComplete()
+            }
+        }
 
         return binding.root
     }

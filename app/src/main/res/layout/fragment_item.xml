@@ -30,7 +30,7 @@
             android:id="@+id/item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(itemViewModel.itemLiveData.price)}"
+            android:text="@{@string/item_price(itemViewModel.itemLiveData.price)}"
             android:textSize="32dp"
             android:textColor="@android:color/primary_text_light"
             tools:text="2000"

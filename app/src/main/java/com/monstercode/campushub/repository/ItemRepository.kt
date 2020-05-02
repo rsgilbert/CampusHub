@@ -15,7 +15,6 @@ import timber.log.Timber
 /**
  * Repository for fetching data from network and room.
  */
-
 class ItemRepository(private val itemDao: ItemDao) {
     val itemList: LiveData<List<Item>> = Transformations.map(itemDao.getItems()) {
         it.asDomainModel()
@@ -25,15 +24,35 @@ class ItemRepository(private val itemDao: ItemDao) {
         it.asDomainModel()
     }
 
+    suspend fun postNewItem(name: String, price: Int): Item? {
+        try {
+            val dbItem = getNetworkService().postNewItem(name, price).asDatabaseModel()
+            itemDao.insertOneItem(dbItem)
+            return dbItem.asDomainModel()
+        } catch (e: Exception) {
+            Timber.e("ERROR posting $e")
+            throw RefreshError("Error posting", e)
+        }
+    }
+
+    suspend fun deleteItem(itemId: String): Boolean? {
+        try {
+            val dbItem = getNetworkService().deleteItem(itemId).asDatabaseModel()
+            itemDao.deleteOne(dbItem._id)
+            return true
+        } catch (cause: Throwable) {
+            Timber.e("ERROR deleting $cause")
+            throw RefreshError("Error deleting", cause)
+        }
+    }
+
     suspend fun refreshItems() {
         try {
             val items: List<NetworkItem> = getNetworkService().fetchItems()
             itemDao.insertAll(items.asDatabaseModel())
 
             val pictures: List<NetworkPicture> = getNetworkService().fetchPictures()
-            Timber.i(pictures.toString())
             itemDao.insertPictures(pictures.asDatabaseModel())
-
         } catch (cause: Throwable) {
             Timber.e("Unable to refresh: $cause")
             throw RefreshError("Unable to fetch", cause)

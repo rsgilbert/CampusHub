@@ -17,7 +17,13 @@ interface ItemDao {
     suspend fun insertAll(items: List<DatabaseItem>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOneItem(item: DatabaseItem)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPictures(pictures: List<DatabasePicture>)
+
+    @Query("DELETE FROM DatabaseItem WHERE _id=:itemId")
+    suspend fun deleteOne(itemId: String)
 
 
 }

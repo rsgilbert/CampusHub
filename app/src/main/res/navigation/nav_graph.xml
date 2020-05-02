@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_itemListFragment_to_itemFragment"
             app:destination="@id/itemFragment" />
+        <action
+            android:id="@+id/action_itemListFragment_to_newItemFragment"
+            app:destination="@id/newItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderListFragment"
@@ -27,5 +30,18 @@
         <argument
             android:name="itemId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_itemFragment_to_itemListFragment"
+            app:destination="@id/itemListFragment"
+            app:popUpTo="@+id/itemListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newItemFragment"
+        android:name="com.monstercode.campushub.newitem.NewItemFragment"
+        android:label="@string/new_item_title">
+        <action
+            android:id="@+id/action_newItemFragment_to_itemFragment"
+            app:destination="@+id/itemFragment"
+            app:popUpTo="@+id/itemListFragment" />
     </fragment>
 </navigation>

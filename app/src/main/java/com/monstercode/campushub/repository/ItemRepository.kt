@@ -10,7 +10,11 @@ import com.monstercode.campushub.network.NetworkPicture
 import com.monstercode.campushub.network.asDatabaseModel
 import com.monstercode.campushub.network.getNetworkService
 import com.monstercode.campushub.util.RefreshError
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import timber.log.Timber
+import java.io.InputStream
 
 /**
  * Repository for fetching data from network and room.
@@ -30,7 +34,6 @@ class ItemRepository(private val itemDao: ItemDao) {
             itemDao.insertOneItem(dbItem)
             return dbItem.asDomainModel()
         } catch (e: Exception) {
-            Timber.e("ERROR posting $e")
             throw RefreshError("Error posting", e)
         }
     }
@@ -41,8 +44,28 @@ class ItemRepository(private val itemDao: ItemDao) {
             itemDao.deleteOne(dbItem._id)
             return true
         } catch (cause: Throwable) {
-            Timber.e("ERROR deleting $cause")
             throw RefreshError("Error deleting", cause)
+        }
+    }
+
+    suspend fun uploadPicture(inputStream: InputStream, item: Item): Boolean? {
+        val part: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "picture_image",
+            item._id,
+            RequestBody.create(
+                MediaType.parse("image/*"),
+                inputStream.readBytes()
+            )
+        )
+
+        try {
+            val networkPicture = getNetworkService().uploadPicture(part)
+            itemDao.insertOnePicture(networkPicture.asDatabaseModel())
+            return true
+        } catch (cause: Throwable) {
+            Timber.e(cause)
+            return false
+//            throw RefreshError("Error uploading $cause", cause)
         }
     }
 
@@ -54,7 +77,6 @@ class ItemRepository(private val itemDao: ItemDao) {
             val pictures: List<NetworkPicture> = getNetworkService().fetchPictures()
             itemDao.insertPictures(pictures.asDatabaseModel())
         } catch (cause: Throwable) {
-            Timber.e("Unable to refresh: $cause")
             throw RefreshError("Unable to fetch", cause)
         }
     }

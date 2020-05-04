@@ -22,6 +22,9 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPictures(pictures: List<DatabasePicture>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOnePicture(picture: DatabasePicture)
+
     @Query("DELETE FROM DatabaseItem WHERE _id=:itemId")
     suspend fun deleteOne(itemId: String)
 

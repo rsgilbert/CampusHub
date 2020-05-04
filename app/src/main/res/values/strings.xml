@@ -12,4 +12,5 @@
     <string name="delete">Delete</string>
     <string name="name_title">Name</string>
     <string name="price_title">Price</string>
+    <string name="new_picture">New Picture</string>
 </resources>

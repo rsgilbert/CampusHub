@@ -1,5 +1,7 @@
 package com.monstercode.campushub.item
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +15,8 @@ import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentItemBinding
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.repository.ItemRepository
-import org.jetbrains.anko.support.v4.toast
+import java.io.FileNotFoundException
+import java.io.InputStream
 
 class ItemFragment : Fragment() {
 
@@ -58,14 +61,40 @@ class ItemFragment : Fragment() {
                 itemViewModel.deleteItem()
                 true
             }
+            R.id.option_new_picture -> {
+                pickImage()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private val pictureClickListener = PictureListAdapter.OnClickListener {
-        toast(it.pictureUrl)
+        pickImage()
     }
 
+    private fun pickImage() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_PHOTO)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_PHOTO && resultCode == Activity.RESULT_OK) {
+            try {
+                data?.let {
+                    val inputStream: InputStream? =
+                        context?.contentResolver?.openInputStream(it.data!!)
+                    inputStream?.let { stream ->
+                        itemViewModel.uploadPicture(stream)
+                    }
+                }
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+        }
+    }
     /**
      * Create and return an instance of ListViewModel
      */
@@ -85,4 +114,7 @@ class ItemFragment : Fragment() {
             getString(R.string.appbar_title, item.name)
     }
 
+    companion object {
+        const val PICK_PHOTO = 1
+    }
 }

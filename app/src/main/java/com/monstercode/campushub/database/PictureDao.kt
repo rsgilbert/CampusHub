@@ -13,4 +13,6 @@ interface PictureDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pictures: List<DatabasePicture>)
+
+
 }

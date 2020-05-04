@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.monstercode.campushub.repository.ItemRepository
 import com.monstercode.campushub.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
+import java.io.InputStream
 
 class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 
@@ -26,6 +27,7 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
         popToItemListLiveData.value = true
     }
 
+
     fun popToItemListComplete() {
         popToItemListLiveData.value = null
     }
@@ -37,6 +39,14 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
                 if (isDeleted == true) {
                     popToItemListStart()
                 }
+            }
+        }
+    }
+
+    fun uploadPicture(inputStream: InputStream) {
+        viewModelScope.launch {
+            itemLiveData.value?.let {
+                repository.uploadPicture(inputStream, it)
             }
         }
     }

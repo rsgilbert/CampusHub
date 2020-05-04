@@ -1,5 +1,6 @@
 package com.monstercode.campushub.network
 
+import okhttp3.MultipartBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -33,6 +34,15 @@ interface Service {
 
     @DELETE("items/{itemId}")
     suspend fun deleteItem(@Path("itemId") itemId: String): NetworkItem
+
+
+    @Multipart
+    @POST("pictures")
+    suspend fun uploadPicture(
+        @Part part: MultipartBody.Part
+    ): NetworkPicture
+
+
 }
 
 /**

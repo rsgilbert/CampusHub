@@ -11,14 +11,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.monstercode.campushub.R
+import com.monstercode.campushub.Update
 import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentItemBinding
+import com.monstercode.campushub.dialog.UpdateNameDialogFragment
+import com.monstercode.campushub.dialog.UpdateNameListener
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.repository.ItemRepository
+import org.jetbrains.anko.support.v4.toast
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-class ItemFragment : Fragment() {
+class ItemFragment : Fragment(), UpdateNameListener {
 
     private lateinit var itemViewModel: ItemViewModel
 
@@ -45,10 +49,25 @@ class ItemFragment : Fragment() {
             }
         }
 
+        itemViewModel.navigateToUpdateLiveData.observe(this) {
+            it?.let {
+                when (it) {
+                    Update.NAME -> startUpdateNameDialog()
+                    Update.PRICE -> {
+                        toast("Updating price")
+                    }
+                }
+            }
+        }
+
         binding.pictureList.adapter = PictureListAdapter(pictureClickListener)
 
         setHasOptionsMenu(true)
         return binding.root
+    }
+
+    private fun startUpdateNameDialog() {
+        UpdateNameDialogFragment().show(childFragmentManager, "started name dialog")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -89,6 +108,7 @@ class ItemFragment : Fragment() {
                     inputStream?.let { stream ->
                         itemViewModel.uploadPicture(stream)
                     }
+
                 }
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
@@ -112,6 +132,11 @@ class ItemFragment : Fragment() {
     private fun setAppBarTitle(item: Item) {
         (activity as AppCompatActivity).supportActionBar?.title =
             getString(R.string.appbar_title, item.name)
+    }
+
+    override fun onSave(name: String) {
+        toast("Running save with $name")
+        itemViewModel.saveName(name)
     }
 
     companion object {

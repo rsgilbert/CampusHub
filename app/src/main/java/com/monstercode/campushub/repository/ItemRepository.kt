@@ -29,12 +29,14 @@ class ItemRepository(private val itemDao: ItemDao) {
     }
 
     suspend fun postNewItem(name: String, price: Int): Item? {
-        try {
+        return try {
             val dbItem = getNetworkService().postNewItem(name, price).asDatabaseModel()
             itemDao.insertOneItem(dbItem)
-            return dbItem.asDomainModel()
+            dbItem.asDomainModel()
         } catch (e: Exception) {
-            throw RefreshError("Error posting", e)
+            e.printStackTrace()
+            null
+//            throw RefreshError("Error posting", e)
         }
     }
 
@@ -77,8 +79,13 @@ class ItemRepository(private val itemDao: ItemDao) {
             val pictures: List<NetworkPicture> = getNetworkService().fetchPictures()
             itemDao.insertPictures(pictures.asDatabaseModel())
         } catch (cause: Throwable) {
-            throw RefreshError("Unable to fetch", cause)
+            Timber.e("Error: $cause")
+//            throw RefreshError("Unable to fetch", cause)
         }
+    }
+
+    suspend fun updateName(name: String) {
+//        getNetworkService().
     }
 
 

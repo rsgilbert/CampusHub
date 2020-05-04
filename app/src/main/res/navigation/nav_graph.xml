@@ -26,7 +26,8 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.monstercode.campushub.item.ItemFragment"
-        android:label="ItemFragment" >
+        android:label="ItemFragment"
+        tools:layout="@layout/item_list_item">
         <argument
             android:name="itemId"
             app:argType="string" />
@@ -38,7 +39,8 @@
     <fragment
         android:id="@+id/newItemFragment"
         android:name="com.monstercode.campushub.newitem.NewItemFragment"
-        android:label="@string/new_item_title">
+        android:label="@string/new_item_title"
+        tools:layout="@layout/fragment_new_item">
         <action
             android:id="@+id/action_newItemFragment_to_itemFragment"
             app:destination="@+id/itemFragment"

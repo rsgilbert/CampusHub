@@ -1,7 +1,7 @@
 package com.monstercode.campushub
 
+import android.view.View
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -66,12 +66,8 @@ fun RecyclerView.bindPictureList(pictureList: List<Picture>?) {
 }
 
 @BindingAdapter("addClickAnimation")
-fun RelativeLayout.addClickAnimation(shouldAdd: Boolean?) {
-    shouldAdd?.let {
-        if (it) {
-            setClickableAnimation(context = context, view = this)
-        }
-    }
+fun View.addClickAnimation(shouldAdd: Boolean?) {
+    setClickableAnimation(context = context, view = this)
 }
 
 @BindingAdapter("horizontalLayout")
@@ -81,14 +77,14 @@ fun RecyclerView.horizontalLayout(asHorizontal: Boolean?) {
     }
 }
 
-
 @BindingAdapter("addDivider")
 fun RecyclerView.addDivider(shouldAdd: Boolean?) {
     shouldAdd?.let {
-        if(it) {
+        if (it) {
             val itemDec = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             itemDec.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider)!!)
             addItemDecoration(itemDec)
         }
     }
 }
+

@@ -6,7 +6,6 @@ import com.monstercode.campushub.database.asDomainModel
 import com.monstercode.campushub.network.NetworkOrder
 import com.monstercode.campushub.network.asDatabaseModel
 import com.monstercode.campushub.network.getNetworkService
-import com.monstercode.campushub.util.RefreshError
 import timber.log.Timber
 
 /**
@@ -24,7 +23,7 @@ class OrderRepository(private val orderDao: OrderDao) {
             orderDao.insertAll(orders.asDatabaseModel())
         } catch (cause: Throwable) {
             Timber.e("Unable to refresh: $cause")
-            throw RefreshError("Unable to fetch chapters", cause)
+//            throw RefreshError("Unable to fetch chapters", cause)
         }
     }
 }

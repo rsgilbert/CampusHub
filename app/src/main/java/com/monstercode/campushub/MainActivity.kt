@@ -1,10 +1,11 @@
 package com.monstercode.campushub
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -54,5 +55,9 @@ class MainActivity : AppCompatActivity() {
     // appBarConfiguration contains top level destinations
     private fun setupActionBar(navController: NavController, appBarConfiguration: AppBarConfiguration) {
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    fun onSave(df: DialogFragment, name: String) {
+
     }
 }

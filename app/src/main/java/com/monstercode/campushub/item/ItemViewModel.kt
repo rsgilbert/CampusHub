@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.monstercode.campushub.Update
 import com.monstercode.campushub.repository.ItemRepository
 import com.monstercode.campushub.util.singleArgViewModelFactory
 import kotlinx.coroutines.launch
@@ -14,6 +15,8 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
     private val itemIdLiveData = MutableLiveData<String>()
 
     val popToItemListLiveData = MutableLiveData<Boolean>()
+
+    val navigateToUpdateLiveData = MutableLiveData<Update>()
 
     var itemLiveData = Transformations.switchMap(itemIdLiveData) {
         repository.getItem(it)
@@ -41,6 +44,26 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun navigateToUpdateNameStart() {
+        navigateToUpdateLiveData.value = Update.NAME
+    }
+
+    fun navigateToUpdateNameComplete() {
+        navigateToUpdateLiveData.value = null
+    }
+
+    fun navigateToUpdatePriceStart() {
+        navigateToUpdateLiveData.value = Update.PRICE
+    }
+
+    fun navigateToUpdatePriceComplete() {
+        navigateToUpdateLiveData.value = null
+    }
+
+    fun saveName(name: String) {
+
     }
 
     fun uploadPicture(inputStream: InputStream) {

@@ -14,15 +14,15 @@ import com.monstercode.campushub.R
 import com.monstercode.campushub.Update
 import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentItemBinding
+import com.monstercode.campushub.dialog.UpdateListener
 import com.monstercode.campushub.dialog.UpdateNameDialogFragment
-import com.monstercode.campushub.dialog.UpdateNameListener
+import com.monstercode.campushub.dialog.UpdatePriceDialogFragment
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.repository.ItemRepository
-import org.jetbrains.anko.support.v4.toast
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-class ItemFragment : Fragment(), UpdateNameListener {
+class ItemFragment : Fragment(), UpdateListener {
 
     private lateinit var itemViewModel: ItemViewModel
 
@@ -53,10 +53,9 @@ class ItemFragment : Fragment(), UpdateNameListener {
             it?.let {
                 when (it) {
                     Update.NAME -> startUpdateNameDialog()
-                    Update.PRICE -> {
-                        toast("Updating price")
-                    }
+                    Update.PRICE -> startUpdatePriceDialog()
                 }
+                itemViewModel.navigateToUpdateComplete()
             }
         }
 
@@ -68,6 +67,10 @@ class ItemFragment : Fragment(), UpdateNameListener {
 
     private fun startUpdateNameDialog() {
         UpdateNameDialogFragment().show(childFragmentManager, "started name dialog")
+    }
+
+    private fun startUpdatePriceDialog() {
+        UpdatePriceDialogFragment().show(childFragmentManager, "started price dialog")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -134,9 +137,12 @@ class ItemFragment : Fragment(), UpdateNameListener {
             getString(R.string.appbar_title, item.name)
     }
 
-    override fun onSave(name: String) {
-        toast("Running save with $name")
-        itemViewModel.saveName(name)
+    override fun onSaveName(name: String) {
+        itemViewModel.updateName(name)
+    }
+
+    override fun onSavePrice(price: Int) {
+        itemViewModel.updatePrice(price)
     }
 
     companion object {

@@ -2,26 +2,11 @@ package com.monstercode.campushub.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.DialogFragment
 import com.monstercode.campushub.databinding.UpdateNameDialogFragmentBinding
-import timber.log.Timber
 
-class UpdateNameDialogFragment : DialogFragment() {
-
-    private lateinit var listener: UpdateNameListener
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        try {
-            listener = parentFragment as UpdateNameListener
-        } catch (e: ClassCastException) {
-            Timber.e("Error $e")
-            throw ClassCastException("$context must implement UpdateNameListener")
-        }
-    }
+class UpdateNameDialogFragment : UpdateDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -30,7 +15,7 @@ class UpdateNameDialogFragment : DialogFragment() {
 
             binding.btnSave.setOnClickListener {
                 val name = binding.name.text.toString()
-                listener.onSave(name)
+                listener.onSaveName(name)
                 dismiss()
             }
             builder.setView(binding.root)
@@ -41,6 +26,3 @@ class UpdateNameDialogFragment : DialogFragment() {
 
 }
 
-interface UpdateNameListener {
-    fun onSave(name: String)
-}

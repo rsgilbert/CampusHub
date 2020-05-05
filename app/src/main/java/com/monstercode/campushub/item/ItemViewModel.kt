@@ -50,20 +50,28 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
         navigateToUpdateLiveData.value = Update.NAME
     }
 
-    fun navigateToUpdateNameComplete() {
-        navigateToUpdateLiveData.value = null
-    }
-
     fun navigateToUpdatePriceStart() {
         navigateToUpdateLiveData.value = Update.PRICE
     }
 
-    fun navigateToUpdatePriceComplete() {
+    fun navigateToUpdateComplete() {
         navigateToUpdateLiveData.value = null
     }
 
-    fun saveName(name: String) {
+    fun updateName(name: String) {
+        viewModelScope.launch {
+            itemLiveData.value?.let {
+                repository.updateName(name, it)
+            }
+        }
+    }
 
+    fun updatePrice(price: Int) {
+        viewModelScope.launch {
+            itemLiveData.value?.let {
+                repository.updatePrice(price, it)
+            }
+        }
     }
 
     fun uploadPicture(inputStream: InputStream) {

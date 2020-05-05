@@ -84,8 +84,22 @@ class ItemRepository(private val itemDao: ItemDao) {
         }
     }
 
-    suspend fun updateName(name: String) {
-//        getNetworkService().
+    suspend fun updateName(name: String, item: Item) {
+        try {
+            val networkItem = getNetworkService().updateName(item._id, name)
+            itemDao.insertOneItem(networkItem.asDatabaseModel())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    suspend fun updatePrice(price: Int, item: Item) {
+        try {
+            val networkItem = getNetworkService().updatePrice(item._id, price)
+            itemDao.insertOneItem(networkItem.asDatabaseModel())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

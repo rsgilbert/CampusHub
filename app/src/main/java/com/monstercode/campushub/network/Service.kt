@@ -36,6 +36,21 @@ interface Service {
     suspend fun deleteItem(@Path("itemId") itemId: String): NetworkItem
 
 
+    @FormUrlEncoded
+    @PUT("items/{itemId}")
+    suspend fun updateName(
+        @Path("itemId") itemId: String,
+        @Field("name") name: String
+    ): NetworkItem
+
+    @FormUrlEncoded
+    @PUT("items/{itemId}")
+    suspend fun updatePrice(
+        @Path("itemId") itemId: String,
+        @Field("price") price: Int
+    ): NetworkItem
+
+
     @Multipart
     @POST("pictures")
     suspend fun uploadPicture(

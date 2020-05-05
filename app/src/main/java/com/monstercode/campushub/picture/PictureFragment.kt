@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.monstercode.campushub.R
 import com.monstercode.campushub.database.getDatabase
-import com.monstercode.campushub.databinding.FragmentPictureBinding
+import com.monstercode.campushub.databinding.PictureViewpagerBinding
 import com.monstercode.campushub.dialog.DeleteListener
+import com.monstercode.campushub.dialog.startDeleteDialog
+import com.monstercode.campushub.item.PictureListAdapter
 import com.monstercode.campushub.repository.PictureRepository
 import com.monstercode.campushub.util.startImagePicker
+import org.jetbrains.anko.support.v4.toast
 
 class PictureFragment : Fragment(), DeleteListener {
 
@@ -22,13 +25,13 @@ class PictureFragment : Fragment(), DeleteListener {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        val binding: FragmentPictureBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_picture, container, false)
+        val binding: PictureViewpagerBinding =
+            DataBindingUtil.inflate(inflater, R.layout.picture_viewpager, container, false)
 
         pictureViewModel = getPictureViewModel()
         binding.pictureViewModel = pictureViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
+        binding.viewPager.adapter = PictureListAdapter(pictureClickListener)
         return binding.root
     }
 
@@ -38,7 +41,7 @@ class PictureFragment : Fragment(), DeleteListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.option_delete -> pictureViewModel.deletePicture()
+            R.id.option_delete -> startDeleteDialog()
             R.id.option_edit -> startImagePicker()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -47,10 +50,14 @@ class PictureFragment : Fragment(), DeleteListener {
 
     override fun onDelete(isDelete: Boolean) {
         if (isDelete) {
-
+            pictureViewModel.deletePicture()
         }
     }
 
+    private val pictureClickListener = PictureListAdapter.OnClickListener {
+//        itemViewModel.navigateToPictureStart(it._id)
+        toast("hi")
+    }
 
     /**
      * Create and return an instance of PictureViewModel
@@ -59,10 +66,10 @@ class PictureFragment : Fragment(), DeleteListener {
         val activity = requireNotNull(activity)
         val database = getDatabase(activity)
         val repository = PictureRepository(database.pictureDao)
-        val pictureId = PictureFragmentArgs.fromBundle(arguments!!).pictureId
+        val itemId = PictureFragmentArgs.fromBundle(arguments!!).itemId
         val pictureViewModel = ViewModelProviders.of(activity, PictureViewModel.FACTORY(repository))
             .get(PictureViewModel::class.java)
-        pictureViewModel.setPictureIdLiveData(pictureId)
+        pictureViewModel.setItemIdLiveData(itemId)
         return pictureViewModel
     }
 }

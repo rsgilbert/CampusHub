@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.monstercode.campushub.domain.Item
@@ -57,6 +58,7 @@ fun RecyclerView.bindOrderList(orderList: List<Order>?) {
 
 @BindingAdapter("itemList")
 fun RecyclerView.bindItemList(itemList: List<Item>?) {
+
     (adapter as ItemListAdapter).submitList(itemList)
 }
 
@@ -65,13 +67,20 @@ fun RecyclerView.bindPictureList(pictureList: List<Picture>?) {
     (adapter as PictureListAdapter).submitList(pictureList)
 }
 
+@BindingAdapter("viewPagerList")
+fun ViewPager2.bindPictureList(pictureList: List<Picture>?) {
+    (adapter as PictureListAdapter).submitList(pictureList)
+}
+
 @BindingAdapter("addClickAnimation")
 fun View.addClickAnimation(shouldAdd: Boolean?) {
-    val attrs = intArrayOf(R.attr.selectableItemBackground)
-    val typedArray = context.obtainStyledAttributes(attrs)
-    val backgroundResource = typedArray.getResourceId(0, 0)
-    setBackgroundResource(backgroundResource)
-    typedArray.recycle()
+    shouldAdd?.let {
+        val attrs = intArrayOf(R.attr.selectableItemBackground)
+        val typedArray = context.obtainStyledAttributes(attrs)
+        val backgroundResource = typedArray.getResourceId(0, 0)
+        setBackgroundResource(backgroundResource)
+        typedArray.recycle()
+    }
 }
 
 @BindingAdapter("horizontalLayout")

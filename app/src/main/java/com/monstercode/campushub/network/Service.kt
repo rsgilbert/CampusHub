@@ -57,6 +57,8 @@ interface Service {
         @Part part: MultipartBody.Part
     ): NetworkPicture
 
+    @DELETE("pictures/{pictureId}")
+    suspend fun deletePicture(@Path("pictureId") pictureId: String): NetworkPicture
 
 }
 

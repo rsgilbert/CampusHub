@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.monstercode.campushub.databinding.PictureListItemBinding
+import com.monstercode.campushub.databinding.PictureViewpagerItemBinding
 import com.monstercode.campushub.domain.Picture
 
 class PictureListAdapter(private val onClickListener: OnClickListener) :
@@ -21,7 +21,7 @@ class PictureListAdapter(private val onClickListener: OnClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
 
-    class ViewHolder private constructor(private val binding: PictureListItemBinding) :
+    class ViewHolder private constructor(private val binding: PictureViewpagerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Picture) {
@@ -32,7 +32,7 @@ class PictureListAdapter(private val onClickListener: OnClickListener) :
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = PictureListItemBinding.inflate(layoutInflater, parent, false)
+                val binding = PictureViewpagerItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }

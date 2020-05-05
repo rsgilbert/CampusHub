@@ -103,5 +103,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
 }
 

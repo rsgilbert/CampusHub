@@ -12,9 +12,8 @@ import java.io.InputStream
 
 class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 
-    private val itemIdLiveData = MutableLiveData<String>()
 
-    val popToItemListLiveData = MutableLiveData<Boolean>()
+    private val itemIdLiveData = MutableLiveData<String>()
 
     val navigateToUpdateLiveData = MutableLiveData<Update>()
 
@@ -28,24 +27,14 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
         itemIdLiveData.value = itemId
     }
 
-    private fun popToItemListStart() {
-        popToItemListLiveData.value = true
-    }
-
-
-    fun popToItemListComplete() {
-        popToItemListLiveData.value = null
-    }
-
-    fun deleteItem() {
+    fun deleteItem(): Boolean {
+        var isDeleted = false
         viewModelScope.launch {
             itemIdLiveData.value?.let {
-                val isDeleted = repository.deleteItem(it)
-                if (isDeleted == true) {
-                    popToItemListStart()
-                }
+                isDeleted = repository.deleteItem(it) ?: false
             }
         }
+        return isDeleted
     }
 
     fun navigateToUpdateNameStart() {
@@ -87,8 +76,8 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
     /**
      * navigate to picture methods
      */
-    fun navigateToPictureStart(pictureId: String) {
-        navigateToPictureLiveData.value = pictureId
+    fun navigateToPictureStart() {
+        navigateToPictureLiveData.value = itemIdLiveData.value
     }
 
     fun navigateToPictureComplete() {

@@ -25,7 +25,7 @@ class ItemRepository(private val itemDao: ItemDao) {
     }
 
     fun getItem(itemId: String) = Transformations.map(itemDao.getItem(itemId)) {
-        it.asDomainModel()
+        it?.asDomainModel()
     }
 
     suspend fun postNewItem(name: String, price: Int): Item? {
@@ -86,6 +86,7 @@ class ItemRepository(private val itemDao: ItemDao) {
 
     suspend fun updateName(name: String, item: Item) {
         try {
+
             val networkItem = getNetworkService().updateName(item._id, name)
             itemDao.insertOneItem(networkItem.asDatabaseModel())
         } catch (e: Exception) {

@@ -37,16 +37,9 @@ class ItemFragment : Fragment(), UpdateListener, DeleteListener {
         binding.lifecycleOwner = viewLifecycleOwner
 
         itemViewModel.itemLiveData.observe(this) {
-            setAppBarTitle(it)
+            it?.let { setAppBarTitle(it) }
         }
 
-        itemViewModel.popToItemListLiveData.observe(this) {
-            if (it == true) {
-                val action = ItemFragmentDirections.actionItemFragmentToItemListFragment()
-                findNavController().navigate(action)
-                itemViewModel.popToItemListComplete()
-            }
-        }
 
         itemViewModel.navigateToUpdateLiveData.observe(this) {
             it?.let {
@@ -59,14 +52,16 @@ class ItemFragment : Fragment(), UpdateListener, DeleteListener {
         }
 
         itemViewModel.navigateToPictureLiveData.observe(this) {
-            it?.let { pictureId ->
-                val action = ItemFragmentDirections.actionItemFragmentToPictureFragment(pictureId)
+            it?.let { itemId ->
+                val action = ItemFragmentDirections.actionItemFragmentToPictureFragment(itemId)
                 findNavController().navigate(action)
                 itemViewModel.navigateToPictureComplete()
             }
         }
 
         binding.pictureList.adapter = PictureListAdapter(pictureClickListener)
+//        val snapHelper = PagerSnapHelper()
+//        snapHelper.attachToRecyclerView(binding.pictureList)
 
         setHasOptionsMenu(true)
         return binding.root
@@ -92,7 +87,7 @@ class ItemFragment : Fragment(), UpdateListener, DeleteListener {
     }
 
     private val pictureClickListener = PictureListAdapter.OnClickListener {
-        itemViewModel.navigateToPictureStart(it._id)
+        itemViewModel.navigateToPictureStart()
     }
 
 
@@ -143,7 +138,10 @@ class ItemFragment : Fragment(), UpdateListener, DeleteListener {
 
     override fun onDelete(isDelete: Boolean) {
         if (isDelete) {
-            itemViewModel.deleteItem()
+            val isDeleted = itemViewModel.deleteItem()
+            if (isDeleted) {
+                findNavController().popBackStack()
+            }
         }
     }
 

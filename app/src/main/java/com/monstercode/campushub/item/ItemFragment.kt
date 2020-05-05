@@ -29,9 +29,8 @@ class ItemFragment : Fragment(), UpdateListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentItemBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_item, container, false
-        )
+        val binding: FragmentItemBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_item, container, false)
 
         itemViewModel = getItemViewModel()
         binding.itemViewModel = itemViewModel
@@ -56,6 +55,14 @@ class ItemFragment : Fragment(), UpdateListener {
                     Update.PRICE -> startUpdatePriceDialog()
                 }
                 itemViewModel.navigateToUpdateComplete()
+            }
+        }
+
+        itemViewModel.navigateToPictureLiveData.observe(this) {
+            it?.let { pictureId ->
+                val action = ItemFragmentDirections.actionItemFragmentToPictureFragment(pictureId)
+                findNavController().navigate(action)
+                itemViewModel.navigateToPictureComplete()
             }
         }
 
@@ -92,7 +99,7 @@ class ItemFragment : Fragment(), UpdateListener {
     }
 
     private val pictureClickListener = PictureListAdapter.OnClickListener {
-        pickImage()
+        itemViewModel.navigateToPictureStart(it._id)
     }
 
     private fun pickImage() {

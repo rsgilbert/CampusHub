@@ -18,6 +18,8 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 
     val navigateToUpdateLiveData = MutableLiveData<Update>()
 
+    val navigateToPictureLiveData = MutableLiveData<String>()
+
     var itemLiveData = Transformations.switchMap(itemIdLiveData) {
         repository.getItem(it)
     }
@@ -80,6 +82,17 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
                 repository.uploadPicture(inputStream, it)
             }
         }
+    }
+
+    /**
+     * navigate to picture methods
+     */
+    fun navigateToPictureStart(pictureId: String) {
+        navigateToPictureLiveData.value = pictureId
+    }
+
+    fun navigateToPictureComplete() {
+        navigateToPictureLiveData.value = null
     }
 
     companion object {

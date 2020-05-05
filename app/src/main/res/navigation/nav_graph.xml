@@ -26,7 +26,6 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.monstercode.campushub.item.ItemFragment"
-        android:label="ItemFragment"
         tools:layout="@layout/item_list_item">
         <argument
             android:name="itemId"
@@ -35,6 +34,9 @@
             android:id="@+id/action_itemFragment_to_itemListFragment"
             app:destination="@id/itemListFragment"
             app:popUpTo="@+id/itemListFragment" />
+        <action
+            android:id="@+id/action_itemFragment_to_pictureFragment"
+            app:destination="@id/pictureFragment" />
     </fragment>
     <fragment
         android:id="@+id/newItemFragment"
@@ -45,5 +47,13 @@
             android:id="@+id/action_newItemFragment_to_itemFragment"
             app:destination="@+id/itemFragment"
             app:popUpTo="@+id/itemListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pictureFragment"
+        android:name="com.monstercode.campushub.picture.PictureFragment"
+        tools:layout="@layout/fragment_picture">
+        <argument
+            android:name="pictureId"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -3,6 +3,7 @@ package com.monstercode.campushub.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import com.monstercode.campushub.databinding.UpdatePriceDialogFragmentBinding
 
@@ -14,8 +15,10 @@ class UpdatePriceDialogFragment : UpdateDialogFragment() {
             val binding = UpdatePriceDialogFragmentBinding.inflate(LayoutInflater.from(context))
 
             binding.btnSave.setOnClickListener {
-                val price = binding.price.text.toString().toInt()
-                listener.onSavePrice(price)
+                val editable: Editable? = binding.price.text
+                if (!editable.isNullOrBlank()) {
+                    listener.onSavePrice(editable.toString().toInt())
+                }
                 dismiss()
             }
 

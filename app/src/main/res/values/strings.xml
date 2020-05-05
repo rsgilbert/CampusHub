@@ -18,4 +18,7 @@
     <string name="update_hint">Update</string>
     <string name="name_label">Name</string>
     <string name="edit">Edit</string>
+    <string name="label_delete_yes">YES</string>
+    <string name="label_delete_no">CANCEL</string>
+    <string name="delete_title">Are you sure you want to delete?</string>
 </resources>

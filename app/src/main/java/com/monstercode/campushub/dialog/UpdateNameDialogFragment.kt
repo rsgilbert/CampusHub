@@ -15,7 +15,9 @@ class UpdateNameDialogFragment : UpdateDialogFragment() {
 
             binding.btnSave.setOnClickListener {
                 val name = binding.name.text.toString()
-                listener.onSaveName(name)
+                if (name.isNotBlank()) {
+                    listener.onSaveName(name)
+                }
                 dismiss()
             }
             builder.setView(binding.root)

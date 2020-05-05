@@ -14,9 +14,7 @@ import com.monstercode.campushub.R
 import com.monstercode.campushub.Update
 import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentItemBinding
-import com.monstercode.campushub.dialog.UpdateListener
-import com.monstercode.campushub.dialog.UpdateNameDialogFragment
-import com.monstercode.campushub.dialog.UpdatePriceDialogFragment
+import com.monstercode.campushub.dialog.*
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.repository.ItemRepository
 import com.monstercode.campushub.util.PICK_PHOTO_REQUEST_CODE
@@ -24,7 +22,7 @@ import com.monstercode.campushub.util.startImagePicker
 import java.io.FileNotFoundException
 import java.io.InputStream
 
-class ItemFragment : Fragment(), UpdateListener {
+class ItemFragment : Fragment(), UpdateListener, DeleteListener {
 
     private lateinit var itemViewModel: ItemViewModel
 
@@ -74,13 +72,6 @@ class ItemFragment : Fragment(), UpdateListener {
         return binding.root
     }
 
-    private fun startUpdateNameDialog() {
-        UpdateNameDialogFragment().show(childFragmentManager, "started name dialog")
-    }
-
-    private fun startUpdatePriceDialog() {
-        UpdatePriceDialogFragment().show(childFragmentManager, "started price dialog")
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.item_options_menu, menu)
@@ -89,7 +80,7 @@ class ItemFragment : Fragment(), UpdateListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.option_delete -> {
-                itemViewModel.deleteItem()
+                startDeleteDialog()
                 true
             }
             R.id.option_new_picture -> {
@@ -122,6 +113,7 @@ class ItemFragment : Fragment(), UpdateListener {
             }
         }
     }
+
     /**
      * Create and return an instance of ListViewModel
      */
@@ -147,6 +139,12 @@ class ItemFragment : Fragment(), UpdateListener {
 
     override fun onSavePrice(price: Int) {
         itemViewModel.updatePrice(price)
+    }
+
+    override fun onDelete(isDelete: Boolean) {
+        if (isDelete) {
+            itemViewModel.deleteItem()
+        }
     }
 
 }

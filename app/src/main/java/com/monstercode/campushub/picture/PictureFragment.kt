@@ -8,10 +8,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.monstercode.campushub.R
 import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentPictureBinding
+import com.monstercode.campushub.dialog.DeleteListener
 import com.monstercode.campushub.repository.PictureRepository
 import com.monstercode.campushub.util.startImagePicker
 
-class PictureFragment : Fragment() {
+class PictureFragment : Fragment(), DeleteListener {
 
     private lateinit var pictureViewModel: PictureViewModel
 
@@ -42,6 +43,12 @@ class PictureFragment : Fragment() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    override fun onDelete(isDelete: Boolean) {
+        if (isDelete) {
+
+        }
     }
 
 

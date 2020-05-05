@@ -14,7 +14,7 @@ interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pictures: List<DatabasePicture>)
 
-    @Query("SELECT * FROM DatabasePicture WHERE _id=:pictureId LIMIT 1")
+    @Query("SELECT * FROM DatabasePicture WHERE _id = :pictureId")
     fun getPicture(pictureId: String): LiveData<DatabasePicture>
 
 }

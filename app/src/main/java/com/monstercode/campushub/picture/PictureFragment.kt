@@ -24,9 +24,12 @@ class PictureFragment : Fragment() {
     ): View? {
         val binding: FragmentPictureBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_picture, container, false)
-        hideActionBar()
+
+//        hideActionBar()
         pictureViewModel = getPictureViewModel()
+
         binding.pictureViewModel = pictureViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }

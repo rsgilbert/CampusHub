@@ -12,14 +12,15 @@
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:padding="@dimen/spacing_normal"
+        android:padding="4dp"
         app:addClickAnimation="@{true}">
 
         <ImageView
             android:id="@+id/picture_url"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/hen" />
+            android:scaleType="fitCenter"
+            app:imageUrl="@{picture.pictureUrl}" />
 
     </RelativeLayout>
 </layout>

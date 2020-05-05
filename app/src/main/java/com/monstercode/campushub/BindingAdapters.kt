@@ -23,9 +23,9 @@ import de.hdodenhof.circleimageview.CircleImageView
 @BindingAdapter("imageUrl")
 fun ImageView.bindImage(imgUrl: String?) {
     imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+//        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         Glide.with(context)
-            .load(imgUri)
+            .load(imgUrl)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.loading_animation)
@@ -38,7 +38,8 @@ fun ImageView.bindImage(imgUrl: String?) {
 @BindingAdapter("imageUrl")
 fun CircleImageView.bindImage(imgUrl: String?) {
     imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+//        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        val imgUri = imgUrl.toUri().buildUpon().build()
         Glide.with(context)
             .load(imgUri)
             .apply(

@@ -16,7 +16,6 @@ import com.monstercode.campushub.domain.Picture
 import com.monstercode.campushub.item.PictureListAdapter
 import com.monstercode.campushub.itemlist.ItemListAdapter
 import com.monstercode.campushub.orderlist.OrderListAdapter
-import com.monstercode.campushub.util.setClickableAnimation
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -68,7 +67,11 @@ fun RecyclerView.bindPictureList(pictureList: List<Picture>?) {
 
 @BindingAdapter("addClickAnimation")
 fun View.addClickAnimation(shouldAdd: Boolean?) {
-    setClickableAnimation(context = context, view = this)
+    val attrs = intArrayOf(R.attr.selectableItemBackground)
+    val typedArray = context.obtainStyledAttributes(attrs)
+    val backgroundResource = typedArray.getResourceId(0, 0)
+    setBackgroundResource(backgroundResource)
+    typedArray.recycle()
 }
 
 @BindingAdapter("horizontalLayout")

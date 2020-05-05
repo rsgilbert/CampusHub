@@ -1,25 +1,29 @@
 package com.monstercode.campushub.util
 
 import android.content.Context
-import android.view.View
+import android.content.Intent
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.monstercode.campushub.R
+
+const val PICK_PHOTO_REQUEST_CODE = 1
 
 fun getSharedP(@NonNull context: Context)
         = context.getSharedPreferences(
     context.getString(R.string.preferences_filename), Context.MODE_PRIVATE
 )
 
-/**
- * Make view show click animation
- */
-fun setClickableAnimation(context: Context, view: View) {
-    val attrs = intArrayOf(R.attr.selectableItemBackground)
-    val typedArray = context.obtainStyledAttributes(attrs)
-    val backgroundResource = typedArray.getResourceId(0, 0)
-    view.setBackgroundResource(backgroundResource)
-    typedArray.recycle()
+fun Fragment.startImagePicker() {
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.type = "image/*"
+    startActivityForResult(intent, PICK_PHOTO_REQUEST_CODE)
 }
+
+private fun Fragment.hideActionBar() {
+    (activity as AppCompatActivity).supportActionBar?.hide()
+}
+
 
 /**
  * Thrown when there was an error fetching data

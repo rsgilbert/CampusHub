@@ -17,4 +17,5 @@
     <string name="price_label">Price</string>
     <string name="update_hint">Update</string>
     <string name="name_label">Name</string>
+    <string name="edit">Edit</string>
 </resources>

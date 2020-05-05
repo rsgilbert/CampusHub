@@ -19,6 +19,8 @@ import com.monstercode.campushub.dialog.UpdateNameDialogFragment
 import com.monstercode.campushub.dialog.UpdatePriceDialogFragment
 import com.monstercode.campushub.domain.Item
 import com.monstercode.campushub.repository.ItemRepository
+import com.monstercode.campushub.util.PICK_PHOTO_REQUEST_CODE
+import com.monstercode.campushub.util.startImagePicker
 import java.io.FileNotFoundException
 import java.io.InputStream
 
@@ -91,7 +93,7 @@ class ItemFragment : Fragment(), UpdateListener {
                 true
             }
             R.id.option_new_picture -> {
-                pickImage()
+                startImagePicker()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -102,15 +104,10 @@ class ItemFragment : Fragment(), UpdateListener {
         itemViewModel.navigateToPictureStart(it._id)
     }
 
-    private fun pickImage() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, PICK_PHOTO)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_PHOTO && resultCode == Activity.RESULT_OK) {
+        if (requestCode == PICK_PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             try {
                 data?.let {
                     val inputStream: InputStream? =
@@ -152,7 +149,4 @@ class ItemFragment : Fragment(), UpdateListener {
         itemViewModel.updatePrice(price)
     }
 
-    companion object {
-        const val PICK_PHOTO = 1
-    }
 }

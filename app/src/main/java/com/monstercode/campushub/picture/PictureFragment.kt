@@ -1,10 +1,7 @@
 package com.monstercode.campushub.picture
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -12,6 +9,7 @@ import com.monstercode.campushub.R
 import com.monstercode.campushub.database.getDatabase
 import com.monstercode.campushub.databinding.FragmentPictureBinding
 import com.monstercode.campushub.repository.PictureRepository
+import com.monstercode.campushub.util.startImagePicker
 
 class PictureFragment : Fragment() {
 
@@ -22,21 +20,30 @@ class PictureFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         val binding: FragmentPictureBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_picture, container, false)
 
-//        hideActionBar()
         pictureViewModel = getPictureViewModel()
-
         binding.pictureViewModel = pictureViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
 
-    private fun hideActionBar() {
-        (activity as AppCompatActivity).supportActionBar?.hide()
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.picture_options_menu, menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.option_delete -> pictureViewModel.deletePicture()
+            R.id.option_edit -> startImagePicker()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
 
     /**
      * Create and return an instance of PictureViewModel

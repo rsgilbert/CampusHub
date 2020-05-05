@@ -17,6 +17,10 @@ class PictureViewModel(repository: PictureRepository) : ViewModel() {
         repository.getPicture(it)
     }
 
+    fun deletePicture() {
+
+    }
+
 
     companion object {
         val FACTORY = singleArgViewModelFactory(::PictureViewModel)
